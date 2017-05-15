@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		2395903E1EC8910C00682ACC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2395903D1EC8910C00682ACC /* main.cpp */; };
+		239590461EC8914000682ACC /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239590451EC8914000682ACC /* OpenGL.framework */; };
+		2395904A1EC8917500682ACC /* libglfw.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 239590491EC8917500682ACC /* libglfw.3.2.dylib */; };
+		2395904C1EC8917F00682ACC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2395904B1EC8917F00682ACC /* Cocoa.framework */; };
+		2395904E1EC891A000682ACC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2395904D1EC891A000682ACC /* IOKit.framework */; };
+		239590501EC891A400682ACC /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2395904F1EC891A400682ACC /* CoreAudioKit.framework */; };
+		239590521EC891B900682ACC /* libfreeimage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 239590511EC891B900682ACC /* libfreeimage.a */; };
+		239590571EC9711D00682ACC /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 239590531EC9711D00682ACC /* Camera.cpp */; };
+		239590591EC9711D00682ACC /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 239590561EC9711D00682ACC /* shader.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +31,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2361FE201EC98152004396B5 /* shader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = shader.vs; path = shader/shader.vs; sourceTree = "<group>"; };
+		2361FE211EC981DF004396B5 /* shader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = shader.fs; path = shader/shader.fs; sourceTree = "<group>"; };
 		2395903A1EC8910C00682ACC /* OpenGL_01_Advance */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL_01_Advance; sourceTree = BUILT_PRODUCTS_DIR; };
 		2395903D1EC8910C00682ACC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		239590451EC8914000682ACC /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		239590471EC8916100682ACC /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../../../../../../usr/local/Cellar/jpeg/8d/lib/libjpeg.a; sourceTree = "<group>"; };
+		239590491EC8917500682ACC /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
+		2395904B1EC8917F00682ACC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2395904D1EC891A000682ACC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		2395904F1EC891A400682ACC /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		239590511EC891B900682ACC /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreeimage.a; path = ../../../../../../usr/local/Cellar/freeimage/3.17.0/lib/libfreeimage.a; sourceTree = "<group>"; };
+		239590531EC9711D00682ACC /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		239590541EC9711D00682ACC /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
+		239590561EC9711D00682ACC /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
+		2395905A1EC97B3800682ACC /* shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,17 +53,34 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				239590521EC891B900682ACC /* libfreeimage.a in Frameworks */,
+				239590501EC891A400682ACC /* CoreAudioKit.framework in Frameworks */,
+				2395904E1EC891A000682ACC /* IOKit.framework in Frameworks */,
+				2395904C1EC8917F00682ACC /* Cocoa.framework in Frameworks */,
+				2395904A1EC8917500682ACC /* libglfw.3.2.dylib in Frameworks */,
+				239590461EC8914000682ACC /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2361FE1F1EC9813B004396B5 /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				2361FE201EC98152004396B5 /* shader.vs */,
+				2361FE211EC981DF004396B5 /* shader.fs */,
+			);
+			name = Shader;
+			path = OpenGL_01_Advance;
+			sourceTree = SOURCE_ROOT;
+		};
 		239590311EC8910C00682ACC = {
 			isa = PBXGroup;
 			children = (
 				2395903C1EC8910C00682ACC /* OpenGL_01_Advance */,
 				2395903B1EC8910C00682ACC /* Products */,
+				239590441EC8914000682ACC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,9 +95,28 @@
 		2395903C1EC8910C00682ACC /* OpenGL_01_Advance */ = {
 			isa = PBXGroup;
 			children = (
+				2361FE1F1EC9813B004396B5 /* Shader */,
+				239590531EC9711D00682ACC /* Camera.cpp */,
+				239590541EC9711D00682ACC /* Camera.hpp */,
+				239590561EC9711D00682ACC /* shader.cpp */,
+				2395905A1EC97B3800682ACC /* shader.h */,
 				2395903D1EC8910C00682ACC /* main.cpp */,
 			);
 			path = OpenGL_01_Advance;
+			sourceTree = "<group>";
+		};
+		239590441EC8914000682ACC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				239590511EC891B900682ACC /* libfreeimage.a */,
+				2395904F1EC891A400682ACC /* CoreAudioKit.framework */,
+				2395904D1EC891A000682ACC /* IOKit.framework */,
+				2395904B1EC8917F00682ACC /* Cocoa.framework */,
+				239590491EC8917500682ACC /* libglfw.3.2.dylib */,
+				239590471EC8916100682ACC /* libjpeg.a */,
+				239590451EC8914000682ACC /* OpenGL.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +176,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				239590571EC9711D00682ACC /* Camera.cpp in Sources */,
+				239590591EC9711D00682ACC /* shader.cpp in Sources */,
 				2395903E1EC8910C00682ACC /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,6 +275,13 @@
 		239590421EC8910C00682ACC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/local/Cellar/jpeg/8d/lib,
+					/usr/local/Cellar/glfw/3.2.1/lib,
+					/usr/local/Cellar/freeimage/3.17.0/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -223,6 +289,13 @@
 		239590431EC8910C00682ACC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/local/Cellar/jpeg/8d/lib,
+					/usr/local/Cellar/glfw/3.2.1/lib,
+					/usr/local/Cellar/freeimage/3.17.0/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -246,6 +319,7 @@
 				239590431EC8910C00682ACC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
