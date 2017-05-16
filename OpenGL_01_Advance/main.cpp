@@ -71,6 +71,7 @@ struct RenderScene {
     Shader* pShader;
     GLuint uViewWidth, uViewHeight;
     GLboolean bDepthTest;
+    GLboolean bCullFront;
 };
 
 const int WINDOW_WIDTH = 1440;
@@ -200,8 +201,8 @@ int main(int argc, const char * argv[]) {
         view = camera.view_matrix();
         viewPos = camera.position();
         
-//        scenes[1].Uniforms["view"] = RenderUniform { MAT4, glm::value_ptr(view) };
-//        scenes[1].Uniforms["viewPos"] = RenderUniform { FLOAT_VEC3, glm::value_ptr(viewPos) };
+        scenes[1].Uniforms["view"] = RenderUniform { MAT4, glm::value_ptr(view) };
+        scenes[1].Uniforms["viewPos"] = RenderUniform { FLOAT_VEC3, glm::value_ptr(viewPos) };
 //        scenes[1].Uniforms["blinn"] = RenderUniform { INT_1, &blinn };
         
         render(pWindow);
@@ -232,7 +233,7 @@ GLFWwindow* init_context(int width, int height, const std::string& title) {
     }
     glfwMakeContextCurrent(window);
     
-//    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     glEnable(GL_DEPTH_TEST);
     
@@ -258,7 +259,7 @@ void setup_callbacks(GLFWwindow* window) {
 }
 
 void setup_data() {
-    GLuint tex_id = load_texture("wood.jpg", GL_SRGB, GL_BGR);
+    GLuint tex_id = load_texture("wood.jpg", GL_RGB, GL_BGR);
     
     GLuint VAO, VBO;
     glGenVertexArrays(1, &VAO);
@@ -356,7 +357,7 @@ void setup_data() {
     depthScene.Uniforms["lightSpaceMatrix"] = RenderUniform { MAT4, glm::value_ptr(lightSpaceMatrix) };
     
     // 设置阴影Framebuffer
-    const int SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
+    const int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
     GLuint depthMapFBO;
     glGenFramebuffers(1, &depthMapFBO);
     
@@ -381,6 +382,7 @@ void setup_data() {
     depthScene.uViewWidth = SHADOW_WIDTH;
     depthScene.uViewHeight = SHADOW_HEIGHT;
     depthScene.bDepthTest = GL_TRUE;
+    depthScene.bCullFront = GL_TRUE;
     depthScene.pShader = new Shader("shader/shadowDepth.vs", "shader/shadowDepth.fs");
     
     GLfloat quadVertices[] = {
@@ -424,19 +426,23 @@ void setup_data() {
     debugDepthScene.bDepthTest = GL_FALSE;
     debugDepthScene.pShader = new Shader("shader/debugDepth.vs", "shader/debugDepth.fs");
     
-    scene.Uniforms["light.position"] = RenderUniform { FLOAT_VEC3, glm::value_ptr(lightPos) };
-    scene.Uniforms["tex1"] = RenderUniform { INT_1, new int[1] { 0 } };
+    scene.Uniforms["lightPos"] = RenderUniform { FLOAT_VEC3, glm::value_ptr(lightPos) };
+    scene.Uniforms["diffuseTexture"] = RenderUniform { INT_1, new int[1] { 0 } };
+    scene.Uniforms["shadowMap"] = RenderUniform { INT_1, new int[1] { 1 } };
     scene.Uniforms["projection"] = RenderUniform { MAT4, glm::value_ptr(*pProjection) };
+    scene.Uniforms["lightSpaceMatrix"] = RenderUniform { MAT4, glm::value_ptr(lightSpaceMatrix) };
+    scene.RenderObjects[0].Textures[1] = depthMap;
     scene.uFramebuffer = 0;
     scene.uClearBit = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT;
     scene.uViewWidth = frameWidth;
     scene.uViewHeight = frameHeight;
     scene.bDepthTest = GL_TRUE;
-    scene.pShader = new Shader("shader/shader.vs", "shader/shader.fs");
+    scene.bCullFront = GL_FALSE;
+    scene.pShader = new Shader("shader/shadow.vs", "shader/shadow.fs");
     
     scenes.push_back(depthScene);
-    scenes.push_back(debugDepthScene);
-//    scenes.push_back(scene);
+//    scenes.push_back(debugDepthScene);
+    scenes.push_back(scene);
     
 }
 
@@ -466,6 +472,7 @@ void set_uniforms(GLuint program, const std::map<std::string, RenderUniform>& un
             case INT_1:
 //                std::cout << it.first << ": " << * static_cast<int *>(it.second.Data) << std::endl;
                 glUniform1i(loc, * static_cast<int *>(it.second.Data));
+                break;
             case FLOAT_1:
                 glUniform1f(loc, * static_cast<GLfloat*>(it.second.Data));
                 break;
@@ -497,6 +504,7 @@ void render(GLFWwindow* window) {
         if (scene.pShader != nullptr) {
             scene.pShader->use();
             (scene.bDepthTest == GL_TRUE) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+            (scene.bCullFront == GL_TRUE) ? glCullFace(GL_FRONT) : glCullFace(GL_BACK);
             glViewport(0, 0, scene.uViewWidth, scene.uViewHeight);
             glBindFramebuffer(GL_FRAMEBUFFER, scene.uFramebuffer);
             glClear(scene.uClearBit);

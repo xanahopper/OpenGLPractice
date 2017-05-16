@@ -50,6 +50,8 @@
 		23F65D4D1ECA9A7D00BE1165 /* shadowDepth.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = shadowDepth.fs; path = shader/shadowDepth.fs; sourceTree = "<group>"; };
 		23F65D4E1ECABD3B00BE1165 /* debugDepth.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = debugDepth.vs; path = shader/debugDepth.vs; sourceTree = "<group>"; };
 		23F65D4F1ECABD8300BE1165 /* debugDepth.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = debugDepth.fs; path = shader/debugDepth.fs; sourceTree = "<group>"; };
+		23F65D501ECAE0E000BE1165 /* shadow.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = shadow.vs; path = shader/shadow.vs; sourceTree = "<group>"; };
+		23F65D511ECAE1E200BE1165 /* shadow.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = shadow.fs; path = shader/shadow.fs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,8 @@
 				23F65D4D1ECA9A7D00BE1165 /* shadowDepth.fs */,
 				23F65D4E1ECABD3B00BE1165 /* debugDepth.vs */,
 				23F65D4F1ECABD8300BE1165 /* debugDepth.fs */,
+				23F65D501ECAE0E000BE1165 /* shadow.vs */,
+				23F65D511ECAE1E200BE1165 /* shadow.fs */,
 			);
 			name = Shader;
 			path = OpenGL_01_Advance;
