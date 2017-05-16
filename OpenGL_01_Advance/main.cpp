@@ -152,7 +152,7 @@ GLfloat vertices[] = {
     -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f // bottom-left
 };
 
-Camera camera(glm::vec3(0.0f, 1.0f, 3.0f));
+Camera camera(glm::vec3(-0.5f, 1.0f, 4.5f));
 glm::vec3 lightPos(-2.0f, 4.0f, -1.0f);
 glm::mat4 *pProjection;
 
@@ -323,7 +323,7 @@ void setup_data() {
     scene.RenderObjects.push_back(renderObject);
     // Cube 1
     model = new glm::mat4();
-    *model = glm::translate(*model, glm::vec3(0.0, 1.5f, 0.0f));
+    *model = glm::translate(*model, glm::vec3(0.0, 1.0f, 2.0f));
     cubeObj.Uniforms["model"] = RenderUniform { MAT4, glm::value_ptr(*model) };
     
     depthScene.RenderObjects.push_back(cubeObj);
@@ -345,10 +345,12 @@ void setup_data() {
     depthScene.RenderObjects.push_back(cubeObj);
     scene.RenderObjects.push_back(cubeObj);
     
+    const int SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
     // 平行光空间矩阵设置
     glm::mat4 lightProjection, lightView;
     GLfloat near_plane = 1.0f, far_plane = 7.5f;
-    lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+//    lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+    lightProjection = glm::perspective(45.0f, 1.33333f, near_plane, far_plane);
     lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
     lightSpaceMatrix = lightProjection * lightView;
     
@@ -357,7 +359,6 @@ void setup_data() {
     depthScene.Uniforms["lightSpaceMatrix"] = RenderUniform { MAT4, glm::value_ptr(lightSpaceMatrix) };
     
     // 设置阴影Framebuffer
-    const int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
     GLuint depthMapFBO;
     glGenFramebuffers(1, &depthMapFBO);
     
