@@ -23,7 +23,8 @@ uniform sampler2D tex1;
 uniform bool blinn;
 
 void main() {
-    
+    float dist = length(viewPos - fs_in.FragPos);
+    float attenuation = 1.0 / (dist);
     vec3 color = vec3(texture(tex1, fs_in.TexCoords));
     // ambient
     vec3 ambient = 0.05 * color;
@@ -43,5 +44,8 @@ void main() {
         spec = pow(max(dot(viewDir, reflectDir), 0.0), 1.0);
     }
     vec3 specular = light.specular * spec * color;
-    FragColor = vec4(ambient + diffuse + specular, 1.0f);
+    FragColor = vec4((ambient + diffuse + specular) * attenuation, 1.0f);
+    
+    float gamma = 2.2;
+    FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
 }
