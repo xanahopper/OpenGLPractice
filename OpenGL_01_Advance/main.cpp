@@ -71,7 +71,7 @@ struct RenderScene {
     Shader* pShader;
     GLuint uViewWidth, uViewHeight;
     GLboolean bDepthTest;
-    GLboolean bCullFront;
+    bool bCullFront;
 };
 
 const int WINDOW_WIDTH = 1024;
@@ -236,6 +236,7 @@ GLFWwindow* init_context(int width, int height, const std::string& title) {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
     
 #ifndef __APPLE__
     glewExperimental = GL_TRUE;
@@ -338,7 +339,7 @@ void setup_data() {
     //Cube 3
     model = new glm::mat4();
     *model = glm::translate(*model, glm::vec3(-1.0f, 0.0f, 2.0f));
-    *model = glm::rotate(*model, 60.0f, glm::normalize(glm::vec3(1.0f, 0.0f, 1.0f)));
+    *model = glm::rotate(*model, glm::radians(37.0f), glm::normalize(glm::vec3(1.0f, 1.0f, 1.0f)));
     *model = glm::scale(*model, glm::vec3(0.5f));
     cubeObj.Uniforms["model"] = RenderUniform { MAT4, glm::value_ptr(*model) };
     
@@ -385,7 +386,7 @@ void setup_data() {
     depthScene.uViewWidth = SHADOW_WIDTH;
     depthScene.uViewHeight = SHADOW_HEIGHT;
     depthScene.bDepthTest = GL_TRUE;
-    depthScene.bCullFront = GL_TRUE;
+    depthScene.bCullFront = false;
     depthScene.pShader = new Shader("shader/shadowDepth.vs", "shader/shadowDepth.fs");
     
     GLfloat quadVertices[] = {
@@ -440,7 +441,7 @@ void setup_data() {
     scene.uViewWidth = frameWidth;
     scene.uViewHeight = frameHeight;
     scene.bDepthTest = GL_TRUE;
-    scene.bCullFront = GL_FALSE;
+    scene.bCullFront = false;
     scene.pShader = new Shader("shader/shadow.vs", "shader/shadow.fs");
     
     scenes.push_back(depthScene);
@@ -507,7 +508,14 @@ void render(GLFWwindow* window) {
         if (scene.pShader != nullptr) {
             scene.pShader->use();
             (scene.bDepthTest == GL_TRUE) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-            (scene.bCullFront == GL_TRUE) ? glCullFace(GL_FRONT) : glCullFace(GL_BACK);
+            if (scene.bCullFront) {
+                glEnable(GL_CULL_FACE);
+                glCullFace(GL_FRONT);
+            }
+            else  {
+                glDisable(GL_CULL_FACE);
+                glCullFace(GL_BACK);
+            }
             glViewport(0, 0, scene.uViewWidth, scene.uViewHeight);
             glBindFramebuffer(GL_FRAMEBUFFER, scene.uFramebuffer);
             glClear(scene.uClearBit);
@@ -537,6 +545,7 @@ void render(GLFWwindow* window) {
                 }
             }
         }
+        glCullFace(GL_BACK);
     }
     
     
